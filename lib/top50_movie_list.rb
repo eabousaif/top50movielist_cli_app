@@ -1,10 +1,11 @@
 # frozen_string_literal:true
 
 class MovieList
-  attr_reader :rank, :name, :year, :duration, :rating, :bio, :director,
-              :votes, :gross_income
+  attr_reader :rank, :name, :year, :genre, :duration, :rating, :bio, :director,
+              :gross_income, :votes
+  @@all = []
 
-  def initialize(name)
-    @name = name
+  def initialize
+    @@all << self
   end
 end
