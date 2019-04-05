@@ -1,1 +1,1 @@
-# top50movielist_cli_app
+# Top 50 Movies CLI App
