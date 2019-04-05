@@ -13,4 +13,4 @@ This project will scrape the IMDb web page and lists the top 50 movies. When the
 
 The original web page looks like this:
 
-![IMDB web page](/Users/ezzabousaif/Desktop/Screen Shot 2019-04-05 at 12.38.25 PM.png)
+![IMDB web page](/Users/ezzabousaif/Desktop/ScreenShot.png)
