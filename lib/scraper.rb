@@ -19,13 +19,14 @@ class Scraper
       genre = movie_info.css(".genre").text[1..-1].strip
       duration = movie_info.css(".runtime").text
       rating = movie_info.css(".ratings-bar .ratings-imdb-rating strong").text
-      url = movie_info.css(".lister-item-header a").first.attr("href")
+      url = "www.imdb.com" + movie_info.css(".lister-item-header a").first.attr("href")
+      scrape_movie(url)
       movie = Movie.new(rank: rank, name: name, year: year, genre: genre, duration: duration, rating: rating, url: url)
       binding.pry
     end
   end
 
-  def scrape_movie
+  def scrape_movie(url)
 
   end
 end

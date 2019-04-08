@@ -15,6 +15,10 @@ class Movie
     @url = url
     @@all << self
   end
+
+  def self.all
+    @@all
+  end
 end
 
 # Movie.new(rank: rank, name: name, year: year, genre: genre, duration: duration, rating: rating, url: url)
