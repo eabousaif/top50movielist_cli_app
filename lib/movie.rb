@@ -1,7 +1,7 @@
 # frozen_string_literal:true
 
 class Movie
-  attr_reader :rank, :name, :year, :genre, :duration, :rating, :bio, :director, :cast
+  attr_reader :rank, :name, :year, :genre, :duration, :rating, :bio, :director, :cast,
               :gross_income, :votes, :url, :awards
   @@all = []
 
@@ -12,7 +12,7 @@ class Movie
     @genre = genre
     @duration = duration
     @rating = rating
-    @url = urlbio
+    @url = url
     @@all << self
   end
 
