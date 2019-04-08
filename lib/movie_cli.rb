@@ -11,5 +11,12 @@ class MovieCLI
     input = ""
     puts "Please make a selection (Choose from 1 - 50):"
     input = gets.strip
+    display_movie
+  end
+
+  def display_movie
+    Movie.all.each do |movie|
+      puts :name
+    end
   end
 end

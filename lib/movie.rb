@@ -1,8 +1,8 @@
 # frozen_string_literal:true
 
 class Movie
-  attr_reader :rank, :name, :year, :genre, :duration, :rating, :bio, :director,
-              :gross_income, :votes, :url
+  attr_reader :rank, :name, :year, :genre, :duration, :rating, :bio, :director, :cast
+              :gross_income, :votes, :url, :awards
   @@all = []
 
   def initialize(rank:, name:, year:, genre:, duration:, rating:, url:)
@@ -12,7 +12,7 @@ class Movie
     @genre = genre
     @duration = duration
     @rating = rating
-    @url = url
+    @url = urlbio
     @@all << self
   end
 

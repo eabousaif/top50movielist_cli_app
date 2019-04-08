@@ -22,11 +22,17 @@ class Scraper
       url = "www.imdb.com" + movie_info.css(".lister-item-header a").first.attr("href")
       scrape_movie(url)
       movie = Movie.new(rank: rank, name: name, year: year, genre: genre, duration: duration, rating: rating, url: url)
-      binding.pry
     end
   end
 
   def scrape_movie(url)
-
+    url.css.each do |movie_info|
+      bio = movie_info.css("")
+      director =
+      cast =
+      gross_income =
+      votes =
+      awards =
+    end
   end
 end
