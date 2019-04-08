@@ -6,6 +6,8 @@ class MovieCLI
   end
 
   def call
+    scraper_instance = Scraper.new
+    scraper_instance.scrape_movie_list
     input = ""
     puts "Please make a selection (Choose from 1 - 50):"
     input = gets.strip
