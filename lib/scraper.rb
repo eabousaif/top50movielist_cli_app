@@ -33,8 +33,9 @@ class Scraper
       bio = movie_info.css(".summary_text").text.strip
       director = movie_info.css(".credit_summary_item a").first.text
       cast = movie_info.css(".credit_summary_item a").to_a.select{|element| element.values.first.include?("ref_=tt_ov_st_sm")}[0..2].map{|actor| actor.text}
-      gross_income = movie_info.css(".txt-block").to_a.select{|element| element.text.include?("Cumulative Worldwide Gross:")}.map{|gross| gross.text.strip}
+      gross_income = movie_info.css(".txt-block").to_a.select{|element| element.text.include?("Gross USA:")}.map{|gross| gross.text.strip}
       votes = movie_info.css(".small").to_a.select{|element| element.values.include?("ratingCount")}.map{|votes| votes.text}
+      movie = IndividualMovie.new(bio: bio, director: director, cast: cast, gross_income: gross_income, votes: votes)
     end
   end
 end
