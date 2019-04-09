@@ -1,5 +1,6 @@
 # frozen_string_literal:true
 
+# only cares about Movies. Never puts, never scrapes.
 class Movie
   attr_reader :rank, :name, :year, :genre, :duration, :rating, :url
   @@all = []
@@ -20,8 +21,7 @@ class Movie
   end
 
   def self.find_by_rank(rank)
-    movies = Scraper.new.scrape_movies
-    movies.find_by(rank: rank)
+    all.find_by(rank: rank)
   end
 end
 

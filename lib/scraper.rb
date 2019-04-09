@@ -1,9 +1,6 @@
 # frozen_string_literal:true
 
-require "nokogiri"
-require "open-uri"
-require "pry"
-
+# handles scraping. Never puts. Not communicating to the user.
 class Scraper
   attr_accessor :doc
 
@@ -13,7 +10,6 @@ class Scraper
   end
 
   def scrape_movies
-    movies = []
     doc.css(".lister-item-content").each do |movie_info|
       rank = movie_info.css(".lister-item-index").text.chop
       name = movie_info.css(".lister-item-header a").text
@@ -22,11 +18,8 @@ class Scraper
       duration = movie_info.css(".runtime").text
       rating = movie_info.css(".ratings-bar .ratings-imdb-rating strong").text + "/10"
       url = "https://www.imdb.com" + movie_info.css(".lister-item-header a").first.attr("href")
-      scrape_movie(url)
       movie = Movie.new(rank: rank, name: name, year: year, genre: genre, duration: duration, rating: rating, url: url)
-      movies << movie
     end
-    movies
   end
 
   def scrape_movie(url)
