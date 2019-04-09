@@ -1,13 +1,11 @@
 # frozen_string_literal:true
 
-require 'pry'
 class MovieCLI
-
   def call
     puts "Welcome to IMDb's Top 50 Movies!"
     puts "Please make a selection (Choose from 1 - 50):"
 
-    scraper = Scraper.new.scrape_movies
+    Scraper.new.scrape_movies
     input = gets.strip
     lookup_movie_by_rank(input)
   end
@@ -20,4 +18,3 @@ class MovieCLI
     Movie.find_by_rank(input)
   end
 end
-
