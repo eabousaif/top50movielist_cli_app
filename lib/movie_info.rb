@@ -1,3 +1,5 @@
+# frozen_string_literal:true
+
 class MovieInfo
   attr_reader :bio, :director, :cast, :gross_income, :votes
   @@all = []

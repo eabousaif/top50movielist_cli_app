@@ -6,18 +6,22 @@ class MovieCLI
   end
 
   def call
-    scraper_instance = Scraper.new
-    scraper_instance.scrape_movie_list
-    input = ""
     puts "Please make a selection (Choose from 1 - 50):"
+
     input = gets.strip
   end
 
-  # def display_movie
-  #   Movie.all.each do |movie|
-  #     puts "Rank: #{movie.rank}"
-  #     puts "Name: #{movie.name}"
-  #   end
-  # end
+  def display_movie
+  end
+
+  def list_commands
+  end
+
+  def exit_cli
+    puts "Goodbye!"
+  end
+
+  def run
+  end
 end
 
