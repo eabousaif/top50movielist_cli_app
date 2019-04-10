@@ -15,6 +15,8 @@ class MovieCLI
     first_selection
 
     second_selection
+
+    exit_cli
   end
 
   def list
@@ -47,7 +49,12 @@ class MovieCLI
         puts "Cast: #{movie.cast}"
         puts "Gross Income: #{gross_income}"
         puts "Votes: #{movie.votes}"
+        puts visit + "#{movie.name}."
+      elsif input == "back"
+        list
       end
+      visit
+      back
     end
   end
 
@@ -59,7 +66,15 @@ class MovieCLI
     "Would you like to find out more about "
   end
 
+  def visit
+    "Type 'open' to visit the IMDb webpage for "
+  end
+
+  def back
+    "Type 'back' to return to the Movie List."
+  end
+
   def exit_cli
-    puts "Goodbye!"
+    "Goodbye!"
   end
 end
