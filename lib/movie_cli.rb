@@ -39,7 +39,7 @@ class MovieCLI
 
   def second_selection
     input = gets.strip.downcase
-    if input == @input && input == "yes"
+    if input == "yes"
       MovieInfo.all.each do |movie|
         puts "Here's more info about #{movie.name}"
         puts "Bio: #{movie.bio}"
