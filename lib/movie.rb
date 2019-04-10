@@ -2,7 +2,8 @@
 
 # only cares about Movies. Never puts, never scrapes.
 class Movie
-  attr_reader :rank, :name, :year, :genre, :duration, :rating, :url
+  attr_reader :rank, :name, :year, :genre, :duration, :rating, :url,
+              :bio, :director, :cast, :gross_income, :votes
   @@all = []
 
   def initialize(rank:, name:, year:, genre:, duration:, rating:, url:)
@@ -21,7 +22,9 @@ class Movie
   end
 
   def self.find_by_rank(rank)
-    all.find_by(rank: rank)
+    all.find do |x|
+      x.rank == rank
+    end
   end
 end
 
