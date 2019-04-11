@@ -2,8 +2,8 @@
 
 # only cares about Movies. Never puts, never scrapes.
 class Movie
-  attr_reader :rank, :name, :year, :genre, :duration, :rating, :url,
-              :bio, :director, :cast, :income, :votes
+  attr_reader :rank, :name, :year, :genre, :duration, :rating, :url
+  attr_accessor :bio, :director, :cast, :income, :votes
   @@all = []
 
   def initialize(rank: nil, name: nil, year: nil, genre: nil, duration: nil, rating: nil, url:, bio: nil, director: nil, cast: nil, income: nil, votes: nil)
