@@ -2,7 +2,7 @@
 
 # handles scraping. Never puts. Not communicating to the user.
 class Scraper
-  attr_accessor :doc
+  attr_accessor :doc, :movie
 
   def initialize
     @doc = Nokogiri::HTML(open("https://www.imdb.com/search/title?genres=drama" \
@@ -18,12 +18,12 @@ class Scraper
       duration = movie_info.css(".runtime").text
       rating = movie_info.css(".ratings-bar .ratings-imdb-rating strong").text + "/10"
       url = "https://www.imdb.com" + movie_info.css(".lister-item-header a").first.attr("href")
-      movie = Movie.new(rank: rank, name: name, year: year, genre: genre, duration: duration, rating: rating, url: url)
+      @movie = Movie.new(rank: rank, name: name, year: year, genre: genre, duration: duration, rating: rating, url: url)
     end
   end
 
   def scrape_movie(url)
-    ind_movie = Nokogiri::HTML(open(movie.url))
+    ind_movie = Nokogiri::HTML(open(url))
     ind_movie.css(".pagecontent").each do |movie_info|
       bio = movie_info.css(".summary_text").text.strip
       director = movie_info.css(".credit_summary_item a").first.text

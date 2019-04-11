@@ -16,13 +16,17 @@ class MovieCLI
 
     second_selection(movie)
 
-    case selections
-    when input == "back"
-      back
-    when input == "open"
-      visit
-    when input == "exit"
-      exit_cli
+    loop do
+
+      case second_selection(movie)
+      when input == "back"
+        list
+      when input == "open"
+        visit
+      when input == "exit"
+        exit_cli
+      end
+    end
   end
 
   def list
@@ -44,15 +48,18 @@ class MovieCLI
   def second_selection(movie)
     input = gets.strip.downcase
     if input == "yes"
-        puts "Here's more info about #{movie.name}".colorize(:light_blue)
-        puts "Bio: #{movie.bio}".colorize(:green)
-        puts "Director: #{movie.director}".colorize(:green)
-        puts "Cast: #{movie.cast}".colorize(:green)
-        puts "Gross Income: #{movie.income}".colorize(:green)
-        puts "Votes: #{movie.votes}".colorize(:green)
-        puts "Movie URL: #{movie.url}".colorize(:green)
-        puts back.colorize(:light_blue)
-        puts (visit + "#{movie.name}").colorize(:light_blue)
+      Scraper.new.scrape_movie(movie.url)
+      puts "Here's more info about #{movie.name}".colorize(:light_blue)
+      puts "Bio: #{movie.bio}".colorize(:green)
+      puts "Director: #{movie.director}".colorize(:green)
+      puts "Cast: #{movie.cast}".colorize(:green)
+      puts "Gross Income: #{movie.income}".colorize(:green)
+      puts "Votes: #{movie.votes}".colorize(:green)
+      puts "Movie URL: #{movie.url}".colorize(:green)
+      puts back.colorize(:light_blue)
+      puts (visit + "#{movie.name}").colorize(:light_blue)
+      else
+        call
     end
   end
 
