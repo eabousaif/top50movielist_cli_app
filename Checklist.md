@@ -16,5 +16,5 @@ Confirm:
 - [ ] You have committed frequently
 
 README.md contains:
-- [X] A short description
+- [ ] A short description
 - [ ] Installation & execution instructions
