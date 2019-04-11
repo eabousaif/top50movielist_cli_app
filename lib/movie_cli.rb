@@ -2,21 +2,27 @@
 
 # handles talking to the user. So "puts" and "gets"
 class MovieCLI
-  attr_accessor :input
+
   def call
-    puts "Welcome to IMDb's Top 50 Movies!"
-    puts "Please make a selection (Choose from 1 - 50):"
+    puts "Welcome to IMDb's Top 50 Movies!".colorize(:light_blue)
+    puts "Please make a selection (Choose from 1 - 50):".colorize(:light_blue)
 
     list
 
-    @input = gets.strip.downcase
-    lookup_movie_by_rank(input)
+    input = gets.strip.downcase
+    movie = lookup_movie_by_rank(input)
 
-    first_selection
+    first_selection(movie)
 
-    second_selection
+    second_selection(movie)
 
-    exit_cli
+    case selections
+    when input == "back"
+      back
+    when input == "open"
+      visit
+    when input == "exit"
+      exit_cli
   end
 
   def list
@@ -26,35 +32,27 @@ class MovieCLI
     end
   end
 
-  def first_selection
-    Movie.all.each do |movie|
-      if @input == movie.rank
-        puts "You've selected #{movie.name}. Here's some quick info:"
-        puts "Year Released: #{movie.year}"
-        puts "Genre: #{movie.genre}"
-        puts "Movie Duration: #{movie.duration}"
-        puts "IMDb Rating: #{movie.rating}"
-        puts more_info + "#{movie.name}?"
-      end
-    end
+  def first_selection(movie)
+        puts "You've selected #{movie.name}. Here's some quick info:".colorize(:light_blue)
+        puts "Year Released: #{movie.year}".colorize(:green)
+        puts "Genre: #{movie.genre}".colorize(:green)
+        puts "Movie Duration: #{movie.duration}".colorize(:green)
+        puts "IMDb Rating: #{movie.rating}".colorize(:green)
+        puts more_info + "#{movie.name}?".colorize(:red)
   end
 
-  def second_selection
+  def second_selection(movie)
     input = gets.strip.downcase
     if input == "yes"
-      MovieInfo.all.each do |movie|
-        puts "Here's more info about #{movie.name}"
-        puts "Bio: #{movie.bio}"
-        puts "Director: #{movie.director}"
-        puts "Cast: #{movie.cast}"
-        puts "Gross Income: #{gross_income}"
-        puts "Votes: #{movie.votes}"
-        puts visit + "#{movie.name}."
-      elsif input == "back"
-        list
-      end
-      visit
-      back
+        puts "Here's more info about #{movie.name}".colorize(:light_blue)
+        puts "Bio: #{movie.bio}".colorize(:green)
+        puts "Director: #{movie.director}".colorize(:green)
+        puts "Cast: #{movie.cast}".colorize(:green)
+        puts "Gross Income: #{movie.income}".colorize(:green)
+        puts "Votes: #{movie.votes}".colorize(:green)
+        puts "Movie URL: #{movie.url}".colorize(:green)
+        puts back.colorize(:light_blue)
+        puts (visit + "#{movie.name}").colorize(:light_blue)
     end
   end
 
@@ -66,12 +64,12 @@ class MovieCLI
     "Would you like to find out more about "
   end
 
-  def visit
-    "Type 'open' to visit the IMDb webpage for "
-  end
-
   def back
     "Type 'back' to return to the Movie List."
+  end
+
+  def visit
+    "Type 'open' to visit the IMDb webpage for "
   end
 
   def exit_cli
