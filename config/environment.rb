@@ -10,4 +10,3 @@ require "launchy"
 Bundler.require
 
 require_all "./lib"
-
