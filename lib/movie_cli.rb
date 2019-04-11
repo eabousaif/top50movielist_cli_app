@@ -14,10 +14,8 @@ class MovieCLI
 
     first_selection(movie)
 
-    second_selection(movie)
-
     loop do
-
+      input = ""
       case second_selection(movie)
       when input == "back"
         list
@@ -26,6 +24,7 @@ class MovieCLI
         call
       when input == "exit"
         exit_cli
+        break
       end
     end
   end
@@ -38,29 +37,29 @@ class MovieCLI
   end
 
   def first_selection(movie)
-        puts "You've selected #{movie.name}. Here's some quick info:".colorize(:light_blue)
-        puts "Year Released: #{movie.year}".colorize(:green)
-        puts "Genre: #{movie.genre}".colorize(:green)
-        puts "Movie Duration: #{movie.duration}".colorize(:green)
-        puts "IMDb Rating: #{movie.rating}".colorize(:green)
-        puts more_info + "#{movie.name}?".colorize(:red)
+    puts "You've selected #{movie.name}. Here's some quick info:".colorize(:light_blue)
+    puts "Year Released: #{movie.year}".colorize(:green)
+    puts "Genre: #{movie.genre}".colorize(:green)
+    puts "Movie Duration: #{movie.duration}".colorize(:green)
+    puts "IMDb Rating: #{movie.rating}".colorize(:green)
+    puts more_info + "#{movie.name}?".colorize(:red)
   end
 
   def second_selection(movie)
     input = gets.strip.downcase
     if input == "yes"
-      Scraper.new.scrape_movie(movie.url)
+      Scraper.new.scrape_movie(movie)
       puts "Here's more info about #{movie.name}".colorize(:light_blue)
       puts "Bio: #{movie.bio}".colorize(:green)
       puts "Director: #{movie.director}".colorize(:green)
       puts "Cast: #{movie.cast}".colorize(:green)
       puts "Gross Income: #{movie.income}".colorize(:green)
       puts "Votes: #{movie.votes}".colorize(:green)
-      puts "Movie URL: #{movie.url}".colorize(:green)
-      puts back.colorize(:light_blue)
-      puts (visit + "#{movie.name}").colorize(:light_blue)
-      else
-        call
+      puts back.colorize(:cyan)
+      puts (visit + "#{movie.name}.").colorize(:cyan)
+      puts exit.colorize(:cyan)
+    else
+      call
     end
   end
 
@@ -81,7 +80,11 @@ class MovieCLI
   end
 
   def open_url(movie)
-    system("open #{movie.url[input]}")
+    system(open "#{movie.url}")
+  end
+
+  def exit
+    "Type 'exit' to exit out of the Movie List."
   end
 
   def exit_cli
