@@ -22,15 +22,14 @@ class Scraper
     end
   end
 
-  def scrape_movie(url)
-    ind_movie = Nokogiri::HTML(open(url))
+  def scrape_movie(movie)
+    ind_movie = Nokogiri::HTML(open(movie.url))
     ind_movie.css(".pagecontent").each do |movie_info|
-      bio = movie_info.css(".summary_text").text.strip
-      director = movie_info.css(".credit_summary_item a").first.text
-      cast = movie_info.css(".credit_summary_item a").to_a.select{|element| element.values.first.include?("ref_=tt_ov_st_sm")}[0..2].map{|actor| actor.text}
-      income = movie_info.css(".txt-block").to_a.select{|element| element.text.include?("Gross USA:")}.map{|gross| gross.text.strip}
-      votes = movie_info.css(".small").to_a.select{|element| element.values.include?("ratingCount")}.map{|votes| votes.text}
-      Movie.new(bio: bio, director: director, cast: cast, income: income, votes: votes, url: url)
+      movie.bio = movie_info.css(".summary_text").text.strip
+      movie.director = movie_info.css(".credit_summary_item a").first.text
+      movie.cast = movie_info.css(".credit_summary_item a").to_a.select{|element| element.values.first.include?("ref_=tt_ov_st_sm")}[0..2].map{|actor| actor.text}
+      movie.income = movie_info.css(".txt-block").to_a.select{|element| element.text.include?("Gross USA:")}.map{|gross| gross.text.strip}.first
+      movie.votes = movie_info.css(".small").to_a.select{|element| element.values.include?("ratingCount")}.map{|votes| votes.text}.first
     end
   end
 end
