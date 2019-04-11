@@ -22,7 +22,8 @@ class MovieCLI
       when input == "back"
         list
       when input == "open"
-        visit
+        open_url(movie)
+        call
       when input == "exit"
         exit_cli
       end
@@ -77,6 +78,10 @@ class MovieCLI
 
   def visit
     "Type 'open' to visit the IMDb webpage for "
+  end
+
+  def open_url(movie)
+    system("open #{movie.url[input]}")
   end
 
   def exit_cli

@@ -6,7 +6,7 @@ class Movie
               :bio, :director, :cast, :income, :votes
   @@all = []
 
-  def initialize(rank:, name:, year:, genre:, duration:, rating:, url:, bio: nil, director: nil, cast: nil, income: nil, votes: nil)
+  def initialize(rank: nil, name: nil, year: nil, genre: nil, duration: nil, rating: nil, url:, bio: nil, director: nil, cast: nil, income: nil, votes: nil)
     @rank = rank
     @name = name
     @year = year
