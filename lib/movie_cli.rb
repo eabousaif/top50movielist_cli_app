@@ -1,5 +1,5 @@
 # frozen_string_literal:true
-
+require "byebug"
 # handles talking to the user. So "puts" and "gets"
 class MovieCLI
 
@@ -13,19 +13,10 @@ class MovieCLI
     movie = lookup_movie_by_rank(input)
 
     first_selection(movie)
+    second_selection(movie)
 
-    loop do
-      case second_selection(movie)
-      when input == "back"
-        call
-      when input == "open"
-        open_url(movie)
-        call
-      when input == "exit"
-        exit_cli
-        break
-      end
-    end
+    input2 = gets.strip.downcase
+    command = end_commands(input2)
   end
 
   def list
@@ -73,6 +64,21 @@ class MovieCLI
     "Would you like to find out more about "
   end
 
+  def end_commands(input2)
+    loop do
+      case second_selection(movie)
+      when input == "back"
+        call
+      when input == "open"
+        open_url(movie)
+        call
+      when input == "exit"
+        exit_cli
+        break
+      end
+    end
+  end
+
   def back
     "Type 'back' to return to the Movie List."
   end
@@ -82,7 +88,7 @@ class MovieCLI
   end
 
   def open_url(movie)
-    system(open "#{movie.url}")
+    Launchy.open("#{movie.url}")
   end
 
   def exit
