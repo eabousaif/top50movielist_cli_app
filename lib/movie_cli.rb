@@ -1,8 +1,7 @@
 # frozen_string_literal:true
-require "byebug"
+
 # handles talking to the user. So "puts" and "gets"
 class MovieCLI
-
   def call
     puts "Welcome to IMDb's Top 50 Movies!".colorize(:light_blue)
     puts "Please make a selection (Choose from 1 - 50):".colorize(:light_blue)
@@ -88,7 +87,7 @@ class MovieCLI
   end
 
   def open_url(movie)
-    Launchy.open("#{movie.url}")
+    Launchy.open('#{movie.url}')
   end
 
   def exit
