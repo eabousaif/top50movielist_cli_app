@@ -15,10 +15,9 @@ class MovieCLI
     first_selection(movie)
 
     loop do
-      input = ""
       case second_selection(movie)
       when input == "back"
-        list
+        call
       when input == "open"
         open_url(movie)
         call
@@ -32,7 +31,8 @@ class MovieCLI
   def list
     Scraper.new.scrape_movies
     Movie.all.each do |movie|
-      puts "#{movie.rank}. #{movie.name}"
+      puts "#{movie.rank}." + " " + "#{movie.name}".colorize(:green)
+      puts "--------------------------------------".colorize(:gray)
     end
   end
 
@@ -42,6 +42,7 @@ class MovieCLI
     puts "Genre: #{movie.genre}".colorize(:green)
     puts "Movie Duration: #{movie.duration}".colorize(:green)
     puts "IMDb Rating: #{movie.rating}".colorize(:green)
+    puts "--------------------------------------".colorize(:gray)
     puts more_info + "#{movie.name}?".colorize(:red)
   end
 
@@ -49,12 +50,13 @@ class MovieCLI
     input = gets.strip.downcase
     if input == "yes"
       Scraper.new.scrape_movie(movie)
-      puts "Here's more info about #{movie.name}".colorize(:light_blue)
+      puts "Here's more info about #{movie.name}:".colorize(:light_blue)
       puts "Bio: #{movie.bio}".colorize(:green)
       puts "Director: #{movie.director}".colorize(:green)
       puts "Cast: #{movie.cast}".colorize(:green)
-      puts "Gross Income: #{movie.income}".colorize(:green)
+      puts "#{movie.income}".colorize(:green)
       puts "Votes: #{movie.votes}".colorize(:green)
+      puts "--------------------------------------".colorize(:gray)
       puts back.colorize(:cyan)
       puts (visit + "#{movie.name}.").colorize(:cyan)
       puts exit.colorize(:cyan)
