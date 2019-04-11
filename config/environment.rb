@@ -4,7 +4,7 @@ require "bundler"
 require "nokogiri"
 require "pry"
 require "open-uri"
-require 'colorize'
+require "colorize"
 
 Bundler.require
 
