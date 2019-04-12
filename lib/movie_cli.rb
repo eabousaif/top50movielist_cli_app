@@ -4,22 +4,26 @@ class MovieCLI
   def call
     welcome
     list
+    prompt_to_input
 
     input = gets.strip.to_i
     input_condtion(input)
 
     movie = lookup_movie_by_rank(input)
 
-    first_selection(movie)
-    second_selection(movie)
+    display_movie_info(movie)
+    display_additional_movie_info(movie)
 
     end_commands(movie)
   end
 
   def welcome
     puts "Welcome to IMDb's Top 50 Movies!".colorize(:light_blue)
-    puts "Please make a selection (Choose from 1 - 50):".colorize(:light_blue)
     sleep(2)
+  end
+
+  def prompt_to_input
+    puts "Please make a selection (Choose from 1 - 50):".colorize(:light_blue)
   end
 
   def list
@@ -30,7 +34,7 @@ class MovieCLI
     end
   end
 
-  def first_selection(movie)
+  def display_movie_info(movie)
     puts "You've selected #{movie.name}. Here's some quick info:".colorize(:light_blue)
     puts "Year Released: #{movie.year}".colorize(:green)
     puts "Genre: #{movie.genre}".colorize(:green)
@@ -40,7 +44,7 @@ class MovieCLI
     puts more_info + "#{movie.name}?".colorize(:red)
   end
 
-  def second_selection(movie)
+  def display_additional_movie_info(movie)
     input = gets.strip.downcase
     if input == "yes"
       Scraper.new.scrape_movie(movie)
@@ -82,7 +86,7 @@ class MovieCLI
   end
 
   def redirect
-    puts "Redirecting to movie list...".colorize(:red)
+    puts "Redirecting back to movie list...".colorize(:red)
     sleep(1)
     call
   end
@@ -90,14 +94,15 @@ class MovieCLI
   def end_commands(movie)
     input2 = gets.strip.downcase
     if input2 == "back"
+      redirect
       call
     elsif input2 == "open"
       open_url(movie)
-      call
+      end_commands(movie)
     elsif input2 == "exit"
       exit_cli
     else
-      puts "Invalid entry, redirecting to movie list."
+      puts "Invalid entry, redirecting back to movie list."
       call
     end
   end
