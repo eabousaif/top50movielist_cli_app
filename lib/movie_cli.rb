@@ -2,34 +2,30 @@
 
 class MovieCLI
   def call
-    puts "Welcome to IMDb's Top 50 Movies!".colorize(:light_blue)
-    puts "Please make a selection (Choose from 1 - 50):".colorize(:light_blue)
-    sleep(3)
-
+    welcome
     list
 
     input = gets.strip.to_i
-
-    if input > 0 && input < 51
-      true
-    else
-      puts "Invalid entry, please choose from 1 - 50".colorize(:red)
-      sleep(2)
-      call
-    end
+    input_condtion(input)
 
     movie = lookup_movie_by_rank(input)
 
     first_selection(movie)
     second_selection(movie)
 
-    command = end_commands(movie)
+    end_commands(movie)
+  end
+
+  def welcome
+    puts "Welcome to IMDb's Top 50 Movies!".colorize(:light_blue)
+    puts "Please make a selection (Choose from 1 - 50):".colorize(:light_blue)
+    sleep(2)
   end
 
   def list
     Scraper.new.scrape_movies
     Movie.all.each do |movie|
-      puts "#{movie.rank}." + " " + "#{movie.name}".colorize(:green)
+      puts movie.rank.to_s + "." + " " + movie.name.to_s.colorize(:green)
       puts "--------------------------------------".colorize(:gray)
     end
   end
@@ -52,14 +48,12 @@ class MovieCLI
       puts "Bio: #{movie.bio}".colorize(:green)
       puts "Director: #{movie.director}".colorize(:green)
       puts "Cast: #{movie.cast}".colorize(:green)
-      puts "#{movie.income}".colorize(:green)
+      puts movie.income.to_s.colorize(:green)
       puts "Votes: #{movie.votes}".colorize(:green)
       puts "--------------------------------------".colorize(:gray)
-      puts back.colorize(:cyan)
-      puts (visit + "#{movie.name}.").colorize(:cyan)
-      puts exit_message.colorize(:cyan)
+      options(movie)
     else
-      call
+      redirect
     end
   end
 
@@ -67,27 +61,49 @@ class MovieCLI
     Movie.find_by_rank(input)
   end
 
+  def input_condtion(input)
+    if input >= 1 && input <= 50
+      true
+    else
+      puts "Invalid entry, please choose from 1 - 50".colorize(:red)
+      sleep(2)
+      call
+    end
+  end
+
   def more_info
     "Would you like to find out more about "
+  end
+
+  def options(movie)
+    puts back.colorize(:cyan)
+    puts "#{visit}#{movie.name}.".colorize(:cyan)
+    puts exit_message.colorize(:cyan)
+  end
+
+  def redirect
+    puts "Redirecting to movie list...".colorize(:red)
+    sleep(1)
+    call
   end
 
   def end_commands(movie)
     input2 = gets.strip.downcase
     if input2 == "back"
-        call
+      call
     elsif input2 == "open"
-        open_url(movie)
-        call
+      open_url(movie)
+      call
     elsif input2 == "exit"
-        exit_cli
+      exit_cli
     else
-      puts "Invalid entry, returning to movie list."
+      puts "Invalid entry, redirecting to movie list."
       call
     end
   end
 
   def back
-    "Type 'back' to return to the Movie List."
+    "Type 'back' to return to the movie list."
   end
 
   def visit
@@ -95,23 +111,15 @@ class MovieCLI
   end
 
   def open_url(movie)
-    Launchy.open("#{movie.url}")
+    Launchy.open(movie.url.to_s)
   end
 
   def exit_message
-    "Type 'exit' to exit out of the Movie List."
+    "Type 'exit' to exit out of the movie list."
   end
 
   def exit_cli
-    "Goodbye!"
-  end
-end
-
-
-def asdf(arg)
-  if arg
-    do_something
-  else
-    asdf(new_arg)
+    puts "Goodbye!".colorize(:light_blue)
+    sleep(1)
   end
 end
