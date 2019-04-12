@@ -27,8 +27,8 @@ class Movie
   end
 
   def self.find_by_rank(rank)
-    all.find do |x|
-      x.rank == rank
+    all.find do |movie|
+      movie.rank == rank.to_i
     end
   end
 end
