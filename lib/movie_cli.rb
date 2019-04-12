@@ -1,21 +1,29 @@
 # frozen_string_literal:true
 
-# handles talking to the user. So "puts" and "gets"
 class MovieCLI
   def call
     puts "Welcome to IMDb's Top 50 Movies!".colorize(:light_blue)
     puts "Please make a selection (Choose from 1 - 50):".colorize(:light_blue)
+    sleep(3)
 
     list
 
-    input = gets.strip.downcase
+    input = gets.strip.to_i
+
+    if input > 0 && input < 51
+      true
+    else
+      puts "Invalid entry, please choose from 1 - 50".colorize(:red)
+      sleep(2)
+      call
+    end
+
     movie = lookup_movie_by_rank(input)
 
     first_selection(movie)
     second_selection(movie)
 
-    input2 = gets.strip.downcase
-    command = end_commands(input2)
+    command = end_commands(movie)
   end
 
   def list
@@ -49,7 +57,7 @@ class MovieCLI
       puts "--------------------------------------".colorize(:gray)
       puts back.colorize(:cyan)
       puts (visit + "#{movie.name}.").colorize(:cyan)
-      puts exit.colorize(:cyan)
+      puts exit_message.colorize(:cyan)
     else
       call
     end
@@ -63,18 +71,18 @@ class MovieCLI
     "Would you like to find out more about "
   end
 
-  def end_commands(input2)
-    loop do
-      case second_selection(movie)
-      when input == "back"
+  def end_commands(movie)
+    input2 = gets.strip.downcase
+    if input2 == "back"
         call
-      when input == "open"
+    elsif input2 == "open"
         open_url(movie)
         call
-      when input == "exit"
+    elsif input2 == "exit"
         exit_cli
-        break
-      end
+    else
+      puts "Invalid entry, returning to movie list."
+      call
     end
   end
 
@@ -87,14 +95,23 @@ class MovieCLI
   end
 
   def open_url(movie)
-    Launchy.open('#{movie.url}')
+    Launchy.open("#{movie.url}")
   end
 
-  def exit
+  def exit_message
     "Type 'exit' to exit out of the Movie List."
   end
 
   def exit_cli
     "Goodbye!"
+  end
+end
+
+
+def asdf(arg)
+  if arg
+    do_something
+  else
+    asdf(new_arg)
   end
 end
