@@ -83,3 +83,9 @@ Metrics/ParameterLists:
 
 Metrics/PerceivedComplexity:
   Enabled: false
+
+Security/Open:
+  Enabled: false
+
+Style/ClassVars:
+  Enabled: false
