@@ -19,7 +19,7 @@ class MovieCLI
 
   def welcome
     puts "Welcome to IMDb's Top 50 Movies!".colorize(:light_blue)
-    sleep(2)
+    sleep(1)
   end
 
   def prompt_to_input
@@ -115,12 +115,12 @@ class MovieCLI
     "Type 'open' to visit the IMDb webpage for "
   end
 
-  def open_url(movie)
-    Launchy.open(movie.url.to_s)
-  end
-
   def exit_message
     "Type 'exit' to exit out of the movie list."
+  end
+
+  def open_url(movie)
+    Launchy.open(movie.url.to_s)
   end
 
   def exit_cli
