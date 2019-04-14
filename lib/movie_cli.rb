@@ -98,7 +98,6 @@ class MovieCLI
       call
     elsif input2 == "open"
       open_url(movie)
-      end_commands(movie)
     elsif input2 == "exit"
       exit_cli
     else
