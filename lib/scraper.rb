@@ -28,17 +28,31 @@ class Scraper
     ind_movie.css(".pagecontent").each do |movie_info|
       movie.bio = movie_info.css(".summary_text").text.strip
       movie.director = movie_info.css(".credit_summary_item a").first.text
-      movie.cast = movie_info.css(".credit_summary_item a").to_a.select do |element|
-        element.values.first.include?("/name")
-      end[3..5].map do |actor|
-        actor.text.strip
-      end
-      movie.income = movie_info.css(".txt-block").to_a.select do |element|
-        element.text.include?("Gross USA:")
-      end.map { |gross| gross.text.strip }.first
-      movie.votes = movie_info.css(".small").to_a.select do |element|
-        element.values.include?("ratingCount")
-      end.map { |votes| votes.text }.first
+      movie.cast = movie_cast(movie_info)
+      movie.income = movie_income(movie_info)
+      movie.votes = movie_votes(movie_info)
     end
+  end
+
+  def movie_cast(movie_info)
+    stars_of_movie = movie_info.css(".credit_summary_item a").to_a.select do |element|
+      element.values.first.include?("/name")
+    end
+    stars_of_movie[3..5].map do |actor|
+      actor.text.strip
+    end
+  end
+
+  def movie_income(movie_info)
+    unsantized_income = movie_info.css(".txt-block").to_a.select do |element|
+      element.text.include?("Gross USA:")
+    end
+    unsantized_income.map { |gross| gross.text.strip }.first
+  end
+
+  def movie_votes(movie_info)
+    movie_info.css(".small").to_a.select do |element|
+      element.values.include?("ratingCount") # rubocop:disable Performance/InefficientHashSearch
+    end.map(&:text).first
   end
 end
